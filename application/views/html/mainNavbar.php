@@ -9,26 +9,19 @@
 
         <ul class="navbar-nav left-nav align-items-center">
             <li class="nav-item">
-                <a href="app-email.html" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Email">
+                <a href="<?php echo base_url('Campana') ?>" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Email">
                     <i class="bx bx-envelope"></i>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="app-chat.html" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Message">
-                    <i class='bx bx-message'></i>
+                <a href="<?php echo base_url('Estadisticas') ?>" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Estadisticas">
+                    <i class='bx bx-pie-chart-alt-2'></i>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="app-calendar.html" class="nav-link" data-toggle="tooltip" data-placement="bottom"
-                    title="Calendar">
-                    <i class='bx bx-calendar'></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="app-todo.html" class="nav-link" data-toggle="tooltip" data-placement="bottom"
+                <a href="<?php echo base_url('Listas') ?>" class="nav-link" data-toggle="tooltip" data-placement="bottom"
                     title="Todo List">
                     <i class='bx bx-edit'></i>
                 </a>
@@ -95,7 +88,7 @@
                     <div class="dropdown-footer">
                         <ul class="profile-nav">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="<?php echo base_url('Auth/logout') ?>" class="nav-link">
                                     <i class='bx bx-log-out'></i> <span>Logout</span>
                                 </a>
                             </li>

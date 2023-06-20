@@ -100,24 +100,7 @@
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(mostrarestadisticas);
-    // $(document).ready(function(){
-    //     $('#form_graphs').submit(function(event){
-    //         event.preventDefault();
-
-    //         var est = $('#estado').val();
-
-    //         $.ajax({
-    //             url: '<?php echo base_url('Estadisticas/graphics')?>',
-    //             method: 'POST',
-    //             data: { estado: est },
-    //             cache: false,
-    //             dataType: 'json',
-    //             success: function(response) {
-    //                 alert(response)
-    //             }
-    //         });
-    //     });
-    // });
+    
     function init(){
         $('#form_graphs').on("submit", function(e) {
             mostrarestadisticas(e);
@@ -155,24 +138,5 @@
             }
         });
     }
-
-
-// function drawChart() {
-
-// var data = google.visualization.arrayToDataTable([
-//   ['Task', 'Hours per Day'],
-//   ['Enviados',     6],
-//   ['Recibido',      3],
-//   ['No recibido',  3],
-// ]);
-
-// var options = {
-//   title: 'Grafica de Campañas'
-// };
-
-// var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-// chart.draw(data, options);
-// }
 init();
 </script>

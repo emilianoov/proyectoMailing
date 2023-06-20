@@ -11,7 +11,7 @@
     <h1>Mnt Listas</h1>
 
     <ol class="breadcrumb">
-        <li class="item"><a href="dashboard-analytics.html"><i class='bx bx-home-alt'></i></a></li>
+        <li class="item"><a href="<?php echo base_url('Welcome') ?>"><i class='bx bx-home-alt'></i></a></li>
 
         <li class="item">Listas</li>
     </ol>
