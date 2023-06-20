@@ -17,9 +17,11 @@
         <li class="item">Editar</li>
     </ol>
 </div>
+
 <div class="card mb-30">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3>Campaña: <a><?php echo ($campain['name_campain']) ?></a></h3><br>
+        
     </div>
     <div class="card-body">
         <form action="<?php echo base_url('Campana/editar')?>" method="post" id="campain2_form">

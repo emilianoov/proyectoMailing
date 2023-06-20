@@ -10,6 +10,7 @@
             $this->load->model('campana_model');
             $this->load->model('listas_model');
             $this->load->model('usuario_model');
+            $this->load->model('estadistica_model');
             $this->load->library('email');
         }
         
@@ -131,27 +132,46 @@
             $id_camp=$this->input->post('idback2');
             $objLista2 = $this->campana_model->email($id_camp);
             
+            $configuraciones=Array(
+                'protocol' => 'mail',
+                'smtp_host' => 'smtp.office365.com',
+                'smpt_port' => 25,
+                'mailtype'  => 'html',
+                'charset'   => 'utf-8',
+                'validate' => 'true'
+            );
+
+            $this->email->initialize($configuraciones);
+            
             foreach($objLista as $key){
-                
-                $configuraciones['mailtype']= 'html';
-                $this->email->initialize($configuraciones);
-                
                 $this->email->to($key["person_correo"]);
                 
                 foreach($objLista2 as $key2){
-                    $this->email->from('emilianogamer154@gmail.com',$key2["name_campain"]);
+                    $this->email->from('emilianogamer154@gmail.com',$key2["title"]);
                     $this->email->subject($key2["subject"]);
                     $this->email->message($key2["template"]);
                 }
-
-                if($this->email->send()){
+                $esEnviado=$this->email->send();
+                 
+                if($esEnviado){
                     echo json_encode('Correo Enviado');
+                    // $esEnviado = 1;
                 }else{
                     echo json_encode('Error');
+                    // $esEnviado = 0;
                 }
-     
-            }                
-            
+                
+                // $estado = $esEnviado; 
+                // $estado = $esEnviado ? 1 : 0;
+
+                $data = array(
+                    'delivered' => $esEnviado ? 1 : 0,
+                    'campain_id' => $key2['id_campain'],
+                    'person_id' =>  $key['id_person']
+                );
+
+                $this->estadistica_model->insert($data);
+            }   
         }
 
     }

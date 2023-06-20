@@ -23,45 +23,21 @@
         <h3>Mantenimiento de estadisticas</h3><br>
     </div>
     <div class="card-body">
-        <div class="col-lg-9 col-md-12">
-            <!-- Email Send Chart -->
-            <div class="card mb-30">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3>Email Send</h3>
-
-                    <div class="dropdown">
-                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class='bx bx-dots-horizontal-rounded'></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class='bx bx-show'></i> View
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class='bx bx-edit-alt'></i> Edit
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class='bx bx-trash'></i> Delete
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class='bx bx-printer'></i> Print
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class='bx bx-download'></i> Download
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div id="emailSend-chart" class="extra-margin"></div>
-                </div>
-            </div>
-            <!-- End Email Send Chart -->
+        <div class="container mt-3">
+            <h3>Selecciona una Campaña</h3>
+            <form method="post" id="form_graphs">
+                <select id="campañas" name="campañas"  class="form-select">
+                    <?php foreach ($campain as $campains) : ?>
+                    <option value="<?php echo ($campains['id_campain']) ?>"><?php echo ($campains['name_campain']) ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit" value="add" name="action" class="btn btn-primary mt-3">Mostrar Grafica</button>
+            </form>
         </div>
-        
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
     </div>
+
 </div>
 <!-- End Breadcrumb Area -->
 
@@ -114,4 +90,89 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
 
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </div>
+
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(mostrarestadisticas);
+    // $(document).ready(function(){
+    //     $('#form_graphs').submit(function(event){
+    //         event.preventDefault();
+
+    //         var est = $('#estado').val();
+
+    //         $.ajax({
+    //             url: '<?php echo base_url('Estadisticas/graphics')?>',
+    //             method: 'POST',
+    //             data: { estado: est },
+    //             cache: false,
+    //             dataType: 'json',
+    //             success: function(response) {
+    //                 alert(response)
+    //             }
+    //         });
+    //     });
+    // });
+    function init(){
+        $('#form_graphs').on("submit", function(e) {
+            mostrarestadisticas(e);
+        });
+    }
+
+    function mostrarestadisticas(e){
+        e.preventDefault();
+        var est = $('#campañas').val();
+
+        $.ajax({
+            url: "<?php echo base_url('Estadisticas/graphics')?>",
+            method: 'POST',
+            data: {
+                estado: est
+            },
+            success: function(respuesta) {
+                // alert(respuesta)
+
+                // Parsear los datos de respuesta
+                var data = JSON.parse(respuesta);
+                // Crear la tabla de datos
+                var dataTable = google.visualization.arrayToDataTable(data);
+
+                // Configurar las opciones de la gráfica
+                var options = {
+                    title: 'Campañas enviadas'
+                };
+
+                // Crear la instancia de la gráfica de barras
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                // Dibujar la gráfica
+                chart.draw(dataTable, options);
+            }
+        });
+    }
+
+
+// function drawChart() {
+
+// var data = google.visualization.arrayToDataTable([
+//   ['Task', 'Hours per Day'],
+//   ['Enviados',     6],
+//   ['Recibido',      3],
+//   ['No recibido',  3],
+// ]);
+
+// var options = {
+//   title: 'Grafica de Campañas'
+// };
+
+// var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+// chart.draw(data, options);
+// }
+init();
+</script>

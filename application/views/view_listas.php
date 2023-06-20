@@ -389,7 +389,8 @@
             var idfront = $(this).attr("id")
             Swal.fire({
                 title: 'Deseas eliminar el registro?',
-                text: "Estas seguro de eliminar el registro?",
+                text: "Al eliminar esta lista, eliminaras todos los contactos que contiene "+
+                "¿Estas seguro de eliminarla?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

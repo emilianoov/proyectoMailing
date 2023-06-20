@@ -64,16 +64,13 @@ class Listas extends CI_Controller {
 
     public function delete() {
         $id=$this->input->post('idback'); 
-        if(empty($this->listas_model->verify($id))){
+        
           $result = $this->listas_model->delete($id);
                 if ($result == TRUE) {
                     echo json_encode("Lista Eliminada");  
                 }else{
                     echo json_encode ("No fue posible eliminarlo");
-              }  
-        }else{
-          echo json_encode("La lista cuenta con contactos, no puede ser eliminado ");
-        }        
+              }         
     }
 
     public function registrarContacto(){
@@ -130,18 +127,6 @@ class Listas extends CI_Controller {
         $id=$this->input->GET('idback');
         
         $objLista = $this->listas_model->contact($id);
-        // $data = array();
-
-        // foreach($objLista as $key){
-        //     $rows = array();
-        //     $rows[] = $key["nombre_person"];
-        //     $rows[] = $key["apaterno"];
-        //     $rows[] = $key["person_correo"];
-        //     $rows[] = '<button type="button" class="btn btn-outline-success editar2" id="'.$key['id_person'].'" ><i class="bx bx-edit"></i></button>';
-        //     $rows[] = '<button type="button" class="btn btn-outline-danger eliminar2" id="'.$key['id_person'].'" ><i class="bx bx-trash"></i></button>';
-        //     $data[]=$rows;
-        // }
-        // $result = array('data' => $data);
         echo json_encode($objLista);
            
     }
